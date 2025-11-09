@@ -8,7 +8,7 @@
 
 ## 项目结构
 
-```json
+```bash
 lyh-uniappx/
 - App.uvue # 应用入口文件
 - main.uts # 主程序文件
