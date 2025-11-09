@@ -1,0 +1,91 @@
+<template>
+  <view class="custom-tabbar" key="custom-tab">
+    <view
+      v-for="(item, index) in tabList"
+      :key="index"
+      class="tab-item"
+      :class="{ active: props.currentTab === index }"
+      @tap="switchTab(index)"
+    >
+      <image
+        class="tab-icon"
+        mode="aspectFit"
+        :src="props.currentTab === index ? item.selectedIcon : item.icon"
+      />
+    </view>
+  </view>
+</template>
+
+<script setup>
+defineOptions({
+  name: "CustomTabbar"
+})
+
+const props = defineProps({
+  currentTab: {
+    type: Number,
+    default: 0
+  }
+})
+
+
+const tabList = reactive([
+  {
+    pagePath: "/pages/home/index",
+    icon: "/static/images/tab/home.svg",
+    selectedIcon: "/static/images/tab/home_active.svg",
+    text: "首页"
+  },
+  {
+    pagePath: "/pages/discover/index",
+    icon: "/static/images/tab/discover.svg",
+    selectedIcon: "/static/images/tab/discover_active.svg",
+    text: "发现"
+  },
+  {
+    pagePath: "/pages/wallet/index",
+    icon: "/static/images/tab/wallet.svg",
+    selectedIcon: "/static/images/tab/wallet_active.svg",
+    text: "钱包"
+  }
+])
+
+const switchTab = (index) => {
+  if (props.currentTab === index) return;
+  uni.redirectTo({
+    url: tabList[index].pagePath
+  });
+}
+</script>
+
+<style>
+.custom-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 82px;
+  border-radius: 42px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.tab-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 8rpx;
+}
+</style>
